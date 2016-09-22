@@ -8,6 +8,7 @@
     "dependencies": {
         "ffi": "2.0.0",
         "ref": "1",
+        "nan": "amatas/nan#bbe2ba05648320ce19646e2ceab9c840cd59583e",
         "ref-struct": "1",
         "ref-array": "1.1.2",
         "universal": "gpii/universal#d8539f7b537b5020da27c327da382cc8684abc38",
