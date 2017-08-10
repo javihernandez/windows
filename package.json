@@ -10,7 +10,7 @@
         "ref": "1",
         "ref-struct": "1",
         "ref-array": "1.1.2",
-        "universal": "amb26/universal#d34c49d1cac3acac24ee666f8844a224ef195642"
+        "universal": "amb26/universal#271566410eaf4af1907aa5878ee9b210bccf658b"
     },
     "devDependencies": {
         "grunt": "1.0.1",
