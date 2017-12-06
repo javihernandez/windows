@@ -12,7 +12,7 @@
         "ref-array": "1.1.2",
         "edge": "6.5.1",
         "string-argv": "0.0.2",
-        "universal": "javihernandez/universal#96032fce6a4a3034bdde80fcd37ffc21756228f8"
+        "universal": "javihernandez/universal#2ec828d90a1b32150d636f9c8f2a163c6ebd2d7f"
     },
     "devDependencies": {
         "grunt": "1.0.1",
