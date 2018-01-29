@@ -99,7 +99,7 @@ function zoomtext_folder() {
 	var Env = WSHShell.Environment("PROCESS");
 	var zoomTextFolder = "";
 	var enVars = new Enumerator(Env);
-	
+
 	for(; !enVars.atEnd(); enVars.moveNext())
 	{
 		if (enVars.item().indexOf("LOCALAPPDATA") == 0) {
@@ -300,6 +300,13 @@ map_settings_to_API = {
 			}
 		},
 
+	"ZT.Reader.Verbosity.Level":
+		function (args){
+			var retVal = "ZT.Reader.Verbosity.Level = " + ZT.Reader.Verbosity.Level;
+			ZT.Reader.Verbosity.Level = args;
+			return retVal;
+		},
+
 	"ZT.Magnification.PrimaryWindow.Power.Increase":
 		function (args){
 			if(args == "true"){
@@ -431,5 +438,3 @@ for (i in settings_to_apply){
 
 // Write the settings to be restore to the file
 write_settings_file(SETTINGS_FILE_TO_RESTORE, settings_to_restore);
-
-
