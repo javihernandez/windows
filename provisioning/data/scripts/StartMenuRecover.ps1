@@ -2,6 +2,21 @@
   .
 #>
 
+#############################################################################
+#  If Powershell is running the 32-bit version on a 64-bit machine, we
+#           need to force powershell to run in 64-bit mode .
+#############################################################################
+
+if ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64") {
+    write-warning "Not running in 64bits, relaunching script in 64 bit mode"
+    if ($myInvocation.Line) {
+        &"$env:WINDIR\sysnative\windowspowershell\v1.0\powershell.exe" -NonInteractive -NoProfile $myInvocation.Line
+    }else{
+        &"$env:WINDIR\sysnative\windowspowershell\v1.0\powershell.exe" -NonInteractive -NoProfile -file "$($myInvocation.InvocationName)" $args
+    }
+exit $lastexitcode
+}
+
 # Get the ID and security principal of the current user account
 $myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
 $myWindowsPrincipal=new-object System.Security.Principal.WindowsPrincipal($myWindowsID)
