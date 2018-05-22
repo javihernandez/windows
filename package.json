@@ -14,7 +14,7 @@
         "edge": "6.5.1",
         "string-argv": "0.0.2",
         "@pokusew/pcsclite": "0.4.18",
-        "universal": "git://github.com/javihernandez/universal.git#04f51bf4948ffbe1e6544e48d4911b4d1eea99e5"
+        "universal": "git://github.com/javihernandez/universal.git#abd6bd2b4caf8b0ff200a826d56af430780d05dd"
     },
     "devDependencies": {
         "grunt": "1.0.1",
