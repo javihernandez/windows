@@ -31,3 +31,4 @@ require("../gpii/node_modules/userListeners/test/all-tests.js");
 require("../gpii/node_modules/gpii-app-zoom/test/testAppZoom.js");
 require("../gpii/node_modules/gpii-localisation/test/testLanguage.js");
 require("../gpii/node_modules/systemSettingsHandler/test/testSystemSettingsHandler.js");
+require("../gpii-service/tests/all-tests.js");
