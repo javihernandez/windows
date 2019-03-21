@@ -18,7 +18,8 @@
 "use strict";
 
 var jqUnit = require("node-jqunit"),
-    gpiiClient = require("../src/gpiiClient.js");
+    gpiiClient = require("../src/gpiiClient.js"),
+    service = require("../src/service.js");
 
 var teardowns = [];
 
@@ -87,7 +88,12 @@ gpiiClientTests.requestTests = [
         action: "execute",
         data: {
             command: "cmd.exe",
+            // Send something to stdout and stderr
             args: ["/c", "echo hello stdout & echo hello stderr 1>&2"],
+            options: {
+                // Set the working directory to prevent cmd.exe complaining about being on a UNC path.
+                cwd: process.env.SystemRoot || "C:\\"
+            },
             wait: true,
             capture: true
         },
@@ -100,6 +106,25 @@ gpiiClientTests.requestTests = [
                     stderr: "hello stderr \r\n"
                 }
             }
+        }
+    },
+    {
+        id: "sign",
+        action: "sign",
+        data: {
+            payload: "hello",
+            keyName: "site"
+        },
+        // sha256-hmac(hello, testing.gpii.net)
+        expect: "81ba311bd1c768eaeabccccc0c208bef1a3e3be1b1476b6e35a7c4464fba5bd5"
+    },
+    {
+        id: "client credentials",
+        action: "getClientCredentials",
+        data: undefined,
+        expect: {
+            "client_id": "pilot-computer",
+            "client_secret": "pilot-computer-secret"
         }
     }
 ];
@@ -159,14 +184,11 @@ jqUnit.asyncTest("Test request handlers", function () {
     var tests = gpiiClientTests.requestTests;
     jqUnit.expect(tests.length * 3);
 
-    // Change to a local directory to stop cmd.exe complaining about being on a UNC path.
-    var currentDir = process.cwd();
-    process.chdir(process.env.HOME);
+    service.loadConfig();
 
     var testIndex = -1;
     var nextTest = function () {
         if (++testIndex >= tests.length) {
-            process.chdir(currentDir);
             jqUnit.start();
             return;
         }

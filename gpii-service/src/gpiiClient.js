@@ -18,6 +18,7 @@
 "use strict";
 
 var child_process = require("child_process"),
+    crypto = require("crypto"),
     service = require("./service.js"),
     ipc = require("./gpii-ipc.js"),
     processHandling = require("./processHandling.js");
@@ -113,6 +114,46 @@ gpiiClient.requestHandlers.closing = function () {
     processHandling.dontRestartProcess(gpiiClient.ipcConnection.processKey);
 };
 
+/**
+ * Gets the client credentials from the secrets file.
+ * @return {Object} The client credentials.
+ */
+gpiiClient.requestHandlers.getClientCredentials = function () {
+    var secrets = service.getSecrets();
+    return secrets && secrets.clientCredentials;
+};
+
+/**
+ * Signs a string or Buffer (or an array of such), using the secret.
+ *
+ * @param {Object} request The signing request
+ * @param {String|Buffer} request.payload The thing to sign.
+ * @param {String} request.keyName Field name in the secrets file whose value is used as a key.
+ * @return {String} The HMAC digest of payload, as a hex string.
+ */
+gpiiClient.requestHandlers.sign = function (request) {
+    var result = null;
+
+    var secrets = service.getSecrets();
+    var key = secrets && secrets[request.keyName];
+
+    if (key) {
+        var hmac = crypto.createHmac("sha256", key);
+
+        var payloads = Array.isArray(request.payload) ? request.payload : [request.payload];
+        payloads.forEach(function (item) {
+            hmac.update(item);
+        });
+
+        result = hmac.digest("hex");
+    } else {
+        service.logError("Attempted to sign with a key named "
+            + request.keyName + ", but no such value exists in the secrets file");
+    }
+
+    return result;
+};
+
 /** @type {Boolean} true if the client is being shutdown */
 gpiiClient.inShutdown = false;
 
@@ -195,6 +236,7 @@ gpiiClient.monitorStatus = function (timeout) {
  */
 gpiiClient.requestHandler = function (request) {
     var handler = request.requestType && gpiiClient.requestHandlers[request.requestType];
+    service.logDebug("Got request:", request);
     if (handler) {
         return handler(request.requestData);
     }

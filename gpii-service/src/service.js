@@ -103,6 +103,33 @@ service.loadConfig = function (dir, file) {
 };
 
 /**
+ * Gets the the secrets, which is the data stored in the secrets file.
+ *
+ * The secret is installed in a separate installer, which could occur after Morphic was installed. Also, the secret
+ * may be later updated. Because of this, the secret is read each time it is used.
+ *
+ * @return {Object} The secret, or null if the secret could not be read. This shouldn't be logged.
+ */
+service.getSecrets = function () {
+    var secret = null;
+
+    try {
+        var file = service.config.secretFile
+            && path.resolve(windows.expandEnvironmentStrings(service.config.secretFile));
+        if (file) {
+            service.log("Reading secrets from " + file);
+            secret = JSON5.parse(fs.readFileSync(file));
+        } else {
+            service.logError("The secrets file is not configured");
+        }
+    } catch (e) {
+        service.logWarn("Unable to read the secrets file " + service.config.secretFile, e);
+    }
+
+    return secret ? secret : null;
+};
+
+/**
  * Called when the service has just started.
  */
 service.start = function () {
