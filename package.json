@@ -19,7 +19,7 @@
     "dependencies": {
         "edge-js": "10.3.1",
         "ffi-napi": "2.4.3",
-        "gpii-universal": "javihernandez/universal#99bd759bf58fe9e7ea9fff51be1d9d4ce24a9cfc",
+        "gpii-universal": "javihernandez/universal#80eb8c4adf8b462d04a1c9bb46a56baa8843b85d",
         "@pokusew/pcsclite": "0.4.18",
         "ref": "1.3.4",
         "ref-struct": "1.1.0",
