@@ -24,3 +24,8 @@ Invoke-Command $csc "/target:exe /out:test-window.exe test-window.cs" $testProce
 # Build the Windows Service
 $serviceDir = Join-Path $rootDir "gpii-service"
 Invoke-Command "npm" "install" $serviceDir
+
+# Build the high-contrast localized name getter
+$spiSettingsHandlerDir = Join-Path $rootDir "gpii\node_modules\spiSettingsHandler\src"
+$csc = Join-Path -Path (Split-Path -Parent $msbuild) csc.exe
+Invoke-Command $csc "/target:exe /out:GetHCName.exe GetHighContrastSchemeName.cs" $spiSettingsHandlerDir
