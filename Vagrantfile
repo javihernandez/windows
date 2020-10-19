@@ -10,14 +10,8 @@ ram = ENV["VM_RAM"] || 2048
 
 Vagrant.configure(2) do |config|
 
-  config.vm.box = "inclusivedesign/windows10-eval-x64-Apps"
+  config.vm.box = "gpii-ops/windows10-1909-eval-x64-universal"
   config.vm.guest = :windows
-
-  config.vm.communicator = "winrm"
-  config.winrm.username = "vagrant"
-  config.winrm.password = "vagrant"
-  config.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct:true
-  config.vm.network :forwarded_port, guest: 5985, host: 5985, id: "rdp", auto_correct:true
 
   config.vm.provider :virtualbox do |vm|
     vm.gui = true
