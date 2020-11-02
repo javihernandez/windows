@@ -9,7 +9,7 @@ jobs:
       VCTargetsPath: 'C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\v140'
     steps:
     - name: Install nvm
-      run: choco install nvm -y
+      run: choco install nvm -y && refreshenv
     - name: Install nodejs x86
       run: nvm install 12.19.0 32
     - name: Use nodejs 12.19.0
