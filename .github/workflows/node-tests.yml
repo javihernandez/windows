@@ -8,12 +8,6 @@ jobs:
     env:
       VCTargetsPath: 'C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\v140'
     steps:
-    - name: Install nvm
-      run: choco install nvm -y && refreshenv
-    - name: Install nodejs x86
-      run: nvm install 12.19.0 32
-    - name: Use nodejs 12.19.0
-      run: nvm use 12.19.0
     - name: Install vcbuildtools
       run: choco install vcbuildtools -ia '/InstallSelectableItems VisualCppBuildTools_ATLMFC_SDK;VisualCppBuildTools_NETFX_SDK' -y
     - name: Install Windows 10 SDK
@@ -24,11 +18,15 @@ jobs:
       run: choco install visualcppbuildtools -y
     - name: Install nuget commandline
       run: choco install nuget.commandline -y
-    - name: Configure npm msvs_version
-      run: npm config set msvs_version 2015 --global
-    - name: Install grunt-cli
-      run: npm install grunt-cli -g
-    - name: Run npm install
-      run: npm install
-    - name: Run tests
-      run: node tests/UnitTests.js
+    - name: Install nvm
+      run: choco install nvm -y
+    - name: Install and setup node 12.19.0 32bit, run the tests
+      shell: cmd
+      run: |
+        refreshenv
+        nvm install 12.19.0 32
+        nvm use 12.19.0
+        npm config set msvs_version 2015 --global
+        npm install grunt-cli -g
+        npm install
+        node tests/UnitTests.js
