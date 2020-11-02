@@ -25,6 +25,8 @@ jobs:
       run: |
         call refreshenv
         echo ::set-env name=PATH::%PATH%
+        echo ::set-env name=NVM_HOME::%NVM_HOME%
+        echo ::set-env name=NVM_SYMLINK::%NVM_SYMLINK%
     - name: Install and setup Node.js 12.19.0 32bit
       run: nvm install 12.19.0 32 && nvm use 12.19.0
     - name: Finish Node.js set up
