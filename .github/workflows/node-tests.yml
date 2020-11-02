@@ -20,13 +20,18 @@ jobs:
       run: choco install nuget.commandline -y
     - name: Install nvm
       run: choco install nvm -y
-    - name: Install and setup node 12.19.0 32bit, run the tests
+    - name: Call refreshenv and update PATH
       shell: cmd
       run: |
-        refreshenv
-        nvm install 12.19.0 32
-        nvm use 12.19.0
-        npm config set msvs_version 2015 --global
-        npm install grunt-cli -g
-        npm install
-        node tests/UnitTests.js
+        call refreshenv
+        echo ::set-env name=PATH::%PATH%
+    - name: Install and setup Node.js 12.19.0 32bit
+      run: nvm install 12.19.0 32 && nvm use 12.19.0
+    - name: Finish Node.js set up
+      run: npm config set msvs_version 2015 --global
+    - name: Install Grunt
+      run: npm install grunt-cli -g
+    - name: Run npm install
+      run: npm install
+    - name: Run unit tests
+      run: node tests/UnitTests.js
