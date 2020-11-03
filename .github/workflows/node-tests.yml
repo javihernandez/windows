@@ -30,8 +30,8 @@ jobs:
         echo ::set-env name=PATH::%PATH%
         echo ::set-env name=NVM_HOME::%NVM_HOME%
         echo ::set-env name=NVM_SYMLINK::%NVM_SYMLINK%
-    - name: Install and setup Node.js 10.23.0 32bit
-      run: nvm install 10.23.0 32 && nvm use 10.23.0 32
+    - name: Install and setup Node.js 10.11.0 32bit
+      run: nvm install 10.11.0 32 && nvm use 10.11.0 32
     - name: Finish Node.js set up
       run: npm config set msvs_version 2015 --global
     - name: Install Grunt
