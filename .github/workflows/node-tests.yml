@@ -21,6 +21,8 @@ jobs:
       run: choco install nuget.commandline -y
     - name: Install nvm
       run: choco install nvm -y
+    - name: Rename default C:\Program Files\nodejs folder (disable default installation of Node.js)
+      run: mv 'C:\Program Files\nodejs' 'C:\Program Files\nodejs-disabled'
     - name: Call refreshenv and update PATH
       shell: cmd
       run: |
