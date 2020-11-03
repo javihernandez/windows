@@ -8,6 +8,7 @@ jobs:
     env:
       VCTargetsPath: 'C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\v140'
     steps:
+    - uses: actions/checkout@v2
     # - name: Install vcbuildtools
     #   run: choco install vcbuildtools -ia '/InstallSelectableItems VisualCppBuildTools_ATLMFC_SDK;VisualCppBuildTools_NETFX_SDK' -y
     # - name: Install Windows 10 SDK
@@ -27,7 +28,6 @@ jobs:
         echo ::set-env name=PATH::%PATH%
         echo ::set-env name=NVM_HOME::%NVM_HOME%
         echo ::set-env name=NVM_SYMLINK::%NVM_SYMLINK%
-    - run: pushd $GITHUB_WORKSPACE
     - name: Install and setup Node.js 12.19.0 32bit
       run: nvm install 12.19.0 32 && nvm use 12.19.0 32
     - name: Finish Node.js set up
