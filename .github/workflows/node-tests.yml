@@ -36,7 +36,7 @@ jobs:
     - name: Finish Node.js set up
       run: npm config set msvs_version 2015 --global
     - name: Add VC/bin folder to Path
-      run: echo "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin" >> $GITHUB_PATH
+      run: echo "::add-path::C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin"
     # Disabled temporary because it's rejecting to install
     # - name: Install Grunt
     #   run: npm install grunt-cli -g
