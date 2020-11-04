@@ -24,9 +24,6 @@ jobs:
       run: mv 'C:\Program Files\nodejs' 'C:\Program Files\nodejs-disabled'
     - name: Install nvm
       run: choco install nvm -y
-    # In our local build env there's no sdks installed
-    - name: Uninstall dotnet sdks
-      run: dotnet-core-uninstall remove --all --sdk --force
     - name: Call refreshenv and update PATH
       shell: cmd
       run: |
@@ -38,6 +35,8 @@ jobs:
       run: nvm install 10.11.0 32 && nvm use 10.11.0 32
     - name: Finish Node.js set up
       run: npm config set msvs_version 2015 --global
+    - name: Add VC/bin folder to Path
+      run: $env:Path += ";C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin"
     # Disabled temporary because it's rejecting to install
     # - name: Install Grunt
     #   run: npm install grunt-cli -g
