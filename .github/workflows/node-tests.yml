@@ -9,23 +9,23 @@ jobs:
       VCTargetsPath: 'C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\v140'
     steps:
     - uses: actions/checkout@v2
-    - name: Install vcbuildtools
-      run: choco install vcbuildtools -ia '/InstallSelectableItems VisualCppBuildTools_ATLMFC_SDK;VisualCppBuildTools_NETFX_SDK' -y
-    - name: Install Windows 10 SDK
-      run: choco install windows-sdk-10-version-1809-all --version=10.0.17763.1 -y
-    - name: Install MS Build Tools
-      run: choco install microsoft-build-tools -y
-    - name: Install VisualCppBuildTools
-      run: choco install visualcppbuildtools -y
-    - name: Install nuget commandline
-      run: choco install nuget.commandline -y
+    # - name: Install vcbuildtools
+    #   run: choco install vcbuildtools -ia '/InstallSelectableItems VisualCppBuildTools_ATLMFC_SDK;VisualCppBuildTools_NETFX_SDK' -y
+    # - name: Install Windows 10 SDK
+    #   run: choco install windows-sdk-10-version-1809-all --version=10.0.17763.1 -y
+    # - name: Install MS Build Tools
+    #   run: choco install microsoft-build-tools -y
+    # - name: Install VisualCppBuildTools
+    #   run: choco install visualcppbuildtools -y
+    # - name: Install nuget commandline
+    #   run: choco install nuget.commandline -y
     # This folder collides with nvm symlink folder
     - name: Rename default C:\Program Files\nodejs folder (disable default installation of Node.js)
       run: mv 'C:\Program Files\nodejs' 'C:\Program Files\nodejs-disabled'
     - name: Install nvm
       run: choco install nvm -y
     - name: Add VC/bin folder to Path
-      run: echo "::add-path::C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin"
+      run: echo "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
     - name: Call refreshenv and update PATH
       shell: cmd
       run: |
