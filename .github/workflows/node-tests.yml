@@ -11,6 +11,8 @@ jobs:
       - run: echo $env:GITHUB_PATH
       - run: cat $env:GITHUB_PATH
       - run: echo $env:PATH
+      - run: $env:PATH += ";C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin"
+      - run: echo $env:PATH
     # - uses: actions/checkout@v2
     # - name: Install vcbuildtools
     #   run: choco install vcbuildtools -ia '/InstallSelectableItems VisualCppBuildTools_ATLMFC_SDK;VisualCppBuildTools_NETFX_SDK' -y
