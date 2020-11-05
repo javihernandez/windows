@@ -10,6 +10,7 @@ jobs:
     steps:
       - run: echo 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       - run: echo $env:PATH
+      - run: npm config get prefix
       - uses: actions/checkout@v2
       - run: echo $env:PATH
       - name: Install vcbuildtools
@@ -28,12 +29,11 @@ jobs:
         run: choco install nuget.commandline -y
       # This folder collides with nvm symlink folder
       - run: echo $env:PATH
+      - run: npm config get prefix
       - name: Rename default C:\Program Files\nodejs folder (disable default installation of Node.js)
         run: mv 'C:\Program Files\nodejs' 'C:\Program Files\nodejs-disabled'
-      - run: npm config get prefix
       - name: Install nvm
         run: choco install nvm -y
-      - run: npm config get prefix
       - run: echo $env:PATH
       - name: Call refreshenv and update PATH
         shell: cmd
@@ -43,7 +43,6 @@ jobs:
           echo ::set-env name=NVM_HOME::%NVM_HOME%
           echo ::set-env name=NVM_SYMLINK::%NVM_SYMLINK%
       - run: echo $env:PATH
-      - run: npm config get prefix
       - name: Install and setup Node.js 10.11.0 32bit
         run: nvm install 10.11.0 32 && nvm use 10.11.0 32
       - run: echo $env:PATH
