@@ -17,12 +17,13 @@ jobs:
       - run: echo $env:PATH
       - name: Install Windows 10 SDK
         run: choco install windows-sdk-10-version-1809-all --version=10.0.17763.1 -y
-        run: echo $env:PATH
+      - run: echo $env:PATH
       - name: Install MS Build Tools
         run: choco install microsoft-build-tools -y
       - run: echo $env:PATH
       - name: Install VisualCppBuildTools
         run: choco install visualcppbuildtools -y
+      - run: echo $env:PATH
       - name: Install nuget commandline
         run: choco install nuget.commandline -y
       # This folder collides with nvm symlink folder
@@ -31,6 +32,7 @@ jobs:
         run: mv 'C:\Program Files\nodejs' 'C:\Program Files\nodejs-disabled'
       - name: Install nvm
         run: choco install nvm -y
+      - run: echo $env:PATH
       - name: Call refreshenv and update PATH
         shell: cmd
         run: |
@@ -38,14 +40,18 @@ jobs:
           echo ::set-env name=PATH::%PATH%
           echo ::set-env name=NVM_HOME::%NVM_HOME%
           echo ::set-env name=NVM_SYMLINK::%NVM_SYMLINK%
+      - run: echo $env:PATH
       - name: Install and setup Node.js 10.11.0 32bit
         run: nvm install 10.11.0 32 && nvm use 10.11.0 32
+      - run: echo $env:PATH
       - name: Finish Node.js set up
         run: npm config set msvs_version 2015 --global
+      - run: echo $env:PATH
       # Disabled temporary because it's rejecting to install
       # - name: Install Grunt
       #   run: npm install grunt-cli -g
       - name: Run npm install
         run: npm install
+      - run: echo $env:PATH
       - name: Run unit tests
         run: node tests/UnitTests.js
