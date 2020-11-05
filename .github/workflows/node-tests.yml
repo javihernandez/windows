@@ -30,6 +30,7 @@ jobs:
       # This folder collides with nvm symlink folder
       - run: echo $env:PATH
       - run: npm config get prefix
+      - run: get-command node
       - name: Rename default C:\Program Files\nodejs folder (disable default installation of Node.js)
         run: mv 'C:\Program Files\nodejs' 'C:\Program Files\nodejs-disabled'
       - name: Install nvm
@@ -51,6 +52,7 @@ jobs:
         run: npm config set msvs_version 2015 --global
       - run: echo $env:PATH
       - run: npm config get prefix
+      - run: get-command node
       # Disabled temporary because it's rejecting to install
       # - name: Install Grunt
       #   run: npm install grunt-cli -g
@@ -58,6 +60,7 @@ jobs:
         run: |
           $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin'
           echo $env:PATH
+          get-command node
           npm install
       - run: echo $env:PATH
       - name: Run unit tests
