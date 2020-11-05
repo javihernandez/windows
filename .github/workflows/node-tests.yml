@@ -11,17 +11,22 @@ jobs:
       - run: echo 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       - run: echo $env:PATH
       - uses: actions/checkout@v2
+      - run: echo $env:PATH
       - name: Install vcbuildtools
         run: choco install vcbuildtools -ia '/InstallSelectableItems VisualCppBuildTools_ATLMFC_SDK;VisualCppBuildTools_NETFX_SDK' -y
+      - run: echo $env:PATH
       - name: Install Windows 10 SDK
         run: choco install windows-sdk-10-version-1809-all --version=10.0.17763.1 -y
+        run: echo $env:PATH
       - name: Install MS Build Tools
         run: choco install microsoft-build-tools -y
+      - run: echo $env:PATH
       - name: Install VisualCppBuildTools
         run: choco install visualcppbuildtools -y
       - name: Install nuget commandline
         run: choco install nuget.commandline -y
       # This folder collides with nvm symlink folder
+      - run: echo $env:PATH
       - name: Rename default C:\Program Files\nodejs folder (disable default installation of Node.js)
         run: mv 'C:\Program Files\nodejs' 'C:\Program Files\nodejs-disabled'
       - name: Install nvm
