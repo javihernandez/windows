@@ -10,7 +10,7 @@ jobs:
     steps:
       - run: echo $env:GITHUB_PATH
       - run: cat $env:GITHUB_PATH
-      - run: echo $PATH
+      - run: echo $env:PATH
     # - uses: actions/checkout@v2
     # - name: Install vcbuildtools
     #   run: choco install vcbuildtools -ia '/InstallSelectableItems VisualCppBuildTools_ATLMFC_SDK;VisualCppBuildTools_NETFX_SDK' -y
