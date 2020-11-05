@@ -13,6 +13,9 @@ jobs:
       - run: npm config get prefix
       - uses: actions/checkout@v2
       - run: echo $env:PATH
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '2.7.17'
       - name: Install vcbuildtools
         run: choco install vcbuildtools -ia '/InstallSelectableItems VisualCppBuildTools_ATLMFC_SDK;VisualCppBuildTools_NETFX_SDK' -y
       - run: echo $env:PATH
