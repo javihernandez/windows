@@ -8,7 +8,10 @@ jobs:
     env:
       VCTargetsPath: 'C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\v140'
     steps:
-    - uses: actions/checkout@v2
+      - run: echo $env:GITHUB_PATH
+      - run: cat $env:GITHUB_PATH
+      - run: echo $PATH
+    # - uses: actions/checkout@v2
     # - name: Install vcbuildtools
     #   run: choco install vcbuildtools -ia '/InstallSelectableItems VisualCppBuildTools_ATLMFC_SDK;VisualCppBuildTools_NETFX_SDK' -y
     # - name: Install Windows 10 SDK
@@ -20,27 +23,27 @@ jobs:
     # - name: Install nuget commandline
     #   run: choco install nuget.commandline -y
     # This folder collides with nvm symlink folder
-    - name: Rename default C:\Program Files\nodejs folder (disable default installation of Node.js)
-      run: mv 'C:\Program Files\nodejs' 'C:\Program Files\nodejs-disabled'
-    - name: Install nvm
-      run: choco install nvm -y
-    - name: Add VC/bin folder to Path
-      run: echo "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-    - name: Call refreshenv and update PATH
-      shell: cmd
-      run: |
-        call refreshenv
-        echo ::set-env name=PATH::%PATH%
-        echo ::set-env name=NVM_HOME::%NVM_HOME%
-        echo ::set-env name=NVM_SYMLINK::%NVM_SYMLINK%
-    - name: Install and setup Node.js 10.11.0 32bit
-      run: nvm install 10.11.0 32 && nvm use 10.11.0 32
-    - name: Finish Node.js set up
-      run: npm config set msvs_version 2015 --global
-    # Disabled temporary because it's rejecting to install
-    # - name: Install Grunt
-    #   run: npm install grunt-cli -g
-    - name: Run npm install
-      run: npm install
-    - name: Run unit tests
-      run: node tests/UnitTests.js
+    # - name: Rename default C:\Program Files\nodejs folder (disable default installation of Node.js)
+    #   run: mv 'C:\Program Files\nodejs' 'C:\Program Files\nodejs-disabled'
+    # - name: Install nvm
+    #   run: choco install nvm -y
+    # - name: Add VC/bin folder to Path
+    #   run: echo "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+    # - name: Call refreshenv and update PATH
+    #   shell: cmd
+    #   run: |
+    #     call refreshenv
+    #     echo ::set-env name=PATH::%PATH%
+    #     echo ::set-env name=NVM_HOME::%NVM_HOME%
+    #     echo ::set-env name=NVM_SYMLINK::%NVM_SYMLINK%
+    # - name: Install and setup Node.js 10.11.0 32bit
+    #   run: nvm install 10.11.0 32 && nvm use 10.11.0 32
+    # - name: Finish Node.js set up
+    #   run: npm config set msvs_version 2015 --global
+    # # Disabled temporary because it's rejecting to install
+    # # - name: Install Grunt
+    # #   run: npm install grunt-cli -g
+    # - name: Run npm install
+    #   run: npm install
+    # - name: Run unit tests
+    #   run: node tests/UnitTests.js
