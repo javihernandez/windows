@@ -55,7 +55,10 @@ jobs:
       # - name: Install Grunt
       #   run: npm install grunt-cli -g
       - name: Run npm install
-        run: npm install
+        run: |
+          $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin'
+          echo $env:PATH
+          npm install
       - run: echo $env:PATH
       - name: Run unit tests
         run: node tests/UnitTests.js
