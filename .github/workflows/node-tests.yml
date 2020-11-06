@@ -8,10 +8,11 @@ jobs:
     env:
       VCTargetsPath: 'C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\v140'
     steps:
-      - uses: javihernandez/setup-node-nvm@master
+      - uses: javihernandez/setup-node-nvm@arch-support
         with:
           node-version: "10.11.0"
-          node-mirror: https://nodejs.org/download/release/
+          node-arch: "32"
+          node-mirror: "https://nodejs.org/download/release/"
       - run: |
           node --version
           node -e "console.log(os.arch())"
