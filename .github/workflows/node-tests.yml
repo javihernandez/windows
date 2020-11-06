@@ -40,6 +40,7 @@ jobs:
       - run: npm config set python python2.7
 
       - run: npm install
+      - run: node tests/UnitTests.js 
 
       # - run: echo $env:PATH
       # - uses: actions/setup-python@v2
