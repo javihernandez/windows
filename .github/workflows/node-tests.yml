@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: dcodeIO/setup-node-nvm@master
         with:
-          node-version: "10.11.0 32"
+          node-version: "10.11.0"
           node-mirror: https://nodejs.org/download/release/
       - run: |
           node --version
