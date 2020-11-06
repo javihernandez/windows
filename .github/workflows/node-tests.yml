@@ -52,7 +52,9 @@ jobs:
       - run: echo $env:PATH
       - run: npm config get prefix
       - name: Finish Node.js set up
-        run: npm config set msvs_version 2015 --global
+        run: |
+          npm config set msvs_version 2015 --global
+          npm config set python python2.7
       - run: echo $env:PATH
       - run: npm config get prefix
       - run: get-command node
