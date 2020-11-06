@@ -63,7 +63,7 @@ jobs:
       #   run: npm install grunt-cli -g
       - name: Run npm install
         run: |
-          $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin'
+          $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin;C:\ProgramData\nvm\v10.11.0'
           echo $env:PATH
           get-command node
           npm install
