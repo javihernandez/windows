@@ -13,6 +13,7 @@ jobs:
           node-version: "10.11.0"
           node-arch: "32"
           node-mirror: "https://nodejs.org/download/release/"
+
       - run: |
           node --version
           node -e "console.log(os.arch())"
