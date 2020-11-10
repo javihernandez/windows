@@ -8,7 +8,7 @@ jobs:
     env:
       VCTargetsPath: 'C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\v140'
     steps:
-      - uses: javihernandez/setup-node-nvm@arch-support
+      - uses: javihernandez/setup-node-nvm@input-arch-field
         with:
           node-version: "10.11.0"
           node-arch: "32"
@@ -16,7 +16,7 @@ jobs:
 
       - run: |
           node --version
-          node -e "console.log(os.arch())"
+          node -e "console.log(process.arch)"
 
       # - run: echo 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       # - run: echo $env:PATH
