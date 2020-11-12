@@ -39,8 +39,11 @@ jobs:
       - run: npm config set msvs_version 2015 --global
       - run: npm config set python python2.7
 
+      # This is required for the get/set volume tests to pass
+      - run: start-service 'Windows Audio'
+
       - run: npm install
-      - run: node tests/UnitTests.js 
+      - run: node tests/UnitTests.js
 
       # - run: echo $env:PATH
       # - uses: actions/setup-python@v2
