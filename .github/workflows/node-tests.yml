@@ -1,6 +1,6 @@
 name: gpii-windows node tests
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
