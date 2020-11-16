@@ -35,5 +35,8 @@ jobs:
       - name: Pass linter
         run: npx grunt lint
 
-        # - name: Run node unit tests
-        #   run: node tests/UnitTests.js
+        #      - name: Run node unit tests
+        #        run: node tests/UnitTests.js
+
+      - name: Run Acceptance builtIn tests
+        run: node tests/AcceptanceTests.js builtIn
