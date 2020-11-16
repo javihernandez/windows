@@ -15,9 +15,9 @@ jobs:
           node-mirror: "https://nodejs.org/download/release/"
 
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '2.7.17'
+        #      - uses: actions/setup-python@v2
+        #        with:
+        #          python-version: '2.7.17'
 
           # - name: Install vcbuildtools
           #   run: choco install vcbuildtools -ia '/InstallSelectableItems VisualCppBuildTools_ATLMFC_SDK;VisualCppBuildTools_NETFX_SDK' -y
@@ -33,7 +33,7 @@ jobs:
           # - run: npm install
 
       - name: Pass linter
-        run: "$(npm bin)/grunt lint"
+        run: npx grunt lint
 
         # - name: Run node unit tests
         #   run: node tests/UnitTests.js
