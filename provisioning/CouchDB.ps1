@@ -33,10 +33,10 @@ Function iwr-Retry {
     $response = $null
 
     while (-not $completed) {
-        try {
-            # Check service status
-            Get-Service -Name "Apache CouchDB"
+        # Check service status
+        Get-Service -Name "Apache CouchDB"
 
+        try {
             $response = iwr -Uri $Uri -Method $Method
             $completed = $true
         } catch {
