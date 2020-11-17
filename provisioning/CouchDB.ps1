@@ -50,7 +50,6 @@ Function iwr-Retry {
 }
 
 # First, let's allow connections to CouchDB ports, 25984 and 25986
-# Port 5986 is already taken by WinRM
 netsh advfirewall firewall add rule name="Open Port 25984" dir=in action=allow protocol=TCP localport=25984
 netsh advfirewall firewall add rule name="Open Port 25986" dir=in action=allow protocol=TCP localport=25986
 
@@ -79,7 +78,8 @@ try {
 
 # Replace the default listening ports
 # By default, CouchDB will be installed at C:\CouchDB.
-Write-Output "Changing default listening port to 25984 and 25986 ..."
+# Port 5986 is already taken by WinRM
+Write-Output "Changing default listening ports to 25984 and 25986 ..."
 $couchDBConfigFile = Join-Path (Join-Path "C:\CouchDB" "etc") "default.ini"
 ((Get-Content -path $couchDBConfigFile -Raw) -replace "5984","25984") | Set-Content -Path $couchDBConfigFile
 ((Get-Content -path $couchDBConfigFile -Raw) -replace "5986","25986") | Set-Content -Path $couchDBConfigFile
@@ -103,7 +103,7 @@ try {
     exit 1
 }
 
-Write-Output "Restarting CouchDB ..."
+Write-Output "Restarting CouchDB again after been configured as a single node ..."
 Restart-Service -Name "Apache CouchDB"
 
 Write-Output "CouchDB is now installed and configured"
