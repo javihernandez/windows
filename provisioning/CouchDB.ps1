@@ -49,6 +49,9 @@ Function iwr-Retry {
     }
 }
 
+netsh advfirewall firewall add rule name="Open Port 25984" dir=in action=allow protocol=TCP localport=25984
+netsh advfirewall firewall add rule name="Open Port 25986" dir=in action=allow protocol=TCP localport=25986
+
 # Check listening Ports
 netstat -an | select-string -pattern "listening"
 
@@ -99,9 +102,9 @@ try {
     # Let's retry the first request until CouchDB is ready.
     # When the maximum retries is reached, the error is propagated.
     #
-    $r1 = iwr-Retry -Method PUT -Uri http://127.0.0.1:5984/_users
-    $r2 = iwr -Method PUT -Uri http://127.0.0.1:5984/_replicator
-    $r3 = iwr -Method PUT -Uri http://127.0.0.1:5984/_global_changes
+    $r1 = iwr-Retry -Method PUT -Uri http://127.0.0.1:25984/_users
+    $r2 = iwr -Method PUT -Uri http://127.0.0.1:25984/_replicator
+    $r3 = iwr -Method PUT -Uri http://127.0.0.1:25984/_global_changes
 } catch {
     Write-Error "ERROR: CouchDB couldn't be configured. Error was $_"
     exit 1
