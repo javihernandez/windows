@@ -33,9 +33,6 @@ Function iwr-Retry {
     $response = $null
 
     while (-not $completed) {
-        # Check service status
-        Get-Service -Name "Apache CouchDB"
-
         try {
             $response = iwr -Uri $Uri -Method $Method
             $completed = $true
@@ -44,6 +41,9 @@ Function iwr-Retry {
                 Write-Warning "Request to $Uri failed the maximum number of $retryCount times."
                 throw
             } else {
+                # Check service status
+                Get-Service -Name "Apache CouchDB"
+
                 Write-Warning "Request to $Uri failed. Retrying in $Delay seconds."
                 Start-Sleep $Delay
                 $retryCount++
