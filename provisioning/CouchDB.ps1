@@ -49,11 +49,10 @@ Function iwr-Retry {
     }
 }
 
+# First, let's allow connections to CouchDB ports, 25984 and 25986
+# Port 5986 is already taken by WinRM
 netsh advfirewall firewall add rule name="Open Port 25984" dir=in action=allow protocol=TCP localport=25984
 netsh advfirewall firewall add rule name="Open Port 25986" dir=in action=allow protocol=TCP localport=25986
-
-# Check listening Ports
-netstat -an | select-string -pattern "listening"
 
 Write-Output "Adding CouchDB to the system"
 $couchDBInstallerURL = "http://archive.apache.org/dist/couchdb/binary/win/2.3.0/couchdb-2.3.0.msi"
@@ -80,7 +79,7 @@ try {
 
 # Replace the default listening ports
 # By default, CouchDB will be installed at C:\CouchDB.
-Write-Output "Changing default listening port to 25984 ..."
+Write-Output "Changing default listening port to 25984 and 25986 ..."
 $couchDBConfigFile = Join-Path (Join-Path "C:\CouchDB" "etc") "default.ini"
 ((Get-Content -path $couchDBConfigFile -Raw) -replace "5984","25984") | Set-Content -Path $couchDBConfigFile
 ((Get-Content -path $couchDBConfigFile -Raw) -replace "5986","25986") | Set-Content -Path $couchDBConfigFile
@@ -88,12 +87,6 @@ $couchDBConfigFile = Join-Path (Join-Path "C:\CouchDB" "etc") "default.ini"
 # In addition to that, we must restart CouchDB in order for the changes to take effect
 Write-Output "Restarting CouchDB ..."
 Restart-Service -Name "Apache CouchDB"
-
-# Check service status
-Get-Service -Name "Apache CouchDB"
-
-# Check listening Ports
-netstat -an | select-string -pattern "listening"
 
 # Set-up CouchDB to run as a single node server as described
 # here: https://docs.couchdb.org/en/stable/setup/single-node.html
