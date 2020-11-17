@@ -72,6 +72,9 @@ try {
     exit 1
 }
 
+# Check service status
+Get-Service -Name "Apache CouchDB"
+
 # Set-up CouchDB to run as a single node server as described
 # here: https://docs.couchdb.org/en/stable/setup/single-node.html
 Write-Output "Configuring CouchDB ..."
