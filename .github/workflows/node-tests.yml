@@ -7,7 +7,6 @@ jobs:
     runs-on: windows-latest
     env:
       VCTargetsPath: 'C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\v140'
-      GPII_TEST_COUCH_USE_EXTERNAL: 1
     steps:
       - uses: javihernandez/setup-node-nvm@input-arch-field
         with:
@@ -41,4 +40,6 @@ jobs:
         #        run: node tests/UnitTests.js
 
       - name: Run Acceptance builtIn tests
+        env:
+          GPII_TEST_COUCH_USE_EXTERNAL: 1
         run: node tests/AcceptanceTests.js builtIn
