@@ -41,9 +41,6 @@ Function iwr-Retry {
                 Write-Warning "Request to $Uri failed the maximum number of $retryCount times."
                 throw
             } else {
-                # Check service status
-                Get-Service -Name "Apache CouchDB"
-
                 Write-Warning "Request to $Uri failed. Retrying in $Delay seconds."
                 Start-Sleep $Delay
                 $retryCount++
@@ -78,6 +75,17 @@ try {
     exit 1
 }
 
+# Replace the default listening ports
+# By default, CouchDB will be installed at C:\CouchDB.
+Write-Output "Changing default listening port to 25984 ..."
+$couchDBConfigFile = Join-Path (Join-Path "C:\CouchDB" "etc") "default.ini"
+((Get-Content -path $couchDBConfigFile -Raw) -replace "5984","25984") | Set-Content -Path $couchDBConfigFile
+((Get-Content -path $couchDBConfigFile -Raw) -replace "5986","25986") | Set-Content -Path $couchDBConfigFile
+
+# In addition to that, we must restart CouchDB in order for the changes to take effect
+Write-Output "Restarting CouchDB ..."
+Restart-Service -Name "Apache CouchDB"
+
 # Check service status
 Get-Service -Name "Apache CouchDB"
 
@@ -99,13 +107,6 @@ try {
     exit 1
 }
 
-# Replace the default listening port
-# By default, CouchDB will be installed at C:\CouchDB.
-Write-Output "Changing default listening port to 25984 ..."
-$couchDBConfigFile = Join-Path (Join-Path "C:\CouchDB" "etc") "default.ini"
-((Get-Content -path $couchDBConfigFile -Raw) -replace "5984","25984") | Set-Content -Path $couchDBConfigFile
-
-# In addition to that, we must restart CouchDB in order for the changes to take effect
 Write-Output "Restarting CouchDB ..."
 Restart-Service -Name "Apache CouchDB"
 
