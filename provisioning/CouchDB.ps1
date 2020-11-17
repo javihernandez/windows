@@ -75,6 +75,16 @@ try {
 # Check service status
 Get-Service -Name "Apache CouchDB"
 
+# Replace the default listening port
+# By default, CouchDB will be installed at C:\CouchDB.
+Write-Output "Changing default listening port to 25984 ..."
+$couchDBConfigFile = Join-Path (Join-Path "C:\CouchDB" "etc") "default.ini"
+((Get-Content -path $couchDBConfigFile -Raw) -replace "5984","25984") | Set-Content -Path $couchDBConfigFile
+
+# In addition to that, we must restart CouchDB in order for the changes to take effect
+Write-Output "Restarting CouchDB ..."
+Restart-Service -Name "Apache CouchDB"
+
 # Check listening Ports
 netstat -an | select-string -pattern "listening"
 
@@ -85,23 +95,23 @@ try {
     # Let's retry the first request until CouchDB is ready.
     # When the maximum retries is reached, the error is propagated.
     #
-    $r1 = iwr-Retry -Method PUT -Uri http://127.0.0.1:5984/_users
-    $r2 = iwr -Method PUT -Uri http://127.0.0.1:5984/_replicator
-    $r3 = iwr -Method PUT -Uri http://127.0.0.1:5984/_global_changes
+    $r1 = iwr-Retry -Method PUT -Uri http://127.0.0.1:25984/_users
+    $r2 = iwr -Method PUT -Uri http://127.0.0.1:25984/_replicator
+    $r3 = iwr -Method PUT -Uri http://127.0.0.1:25984/_global_changes
 } catch {
     Write-Error "ERROR: CouchDB couldn't be configured. Error was $_"
     exit 1
 }
 
-# Replace the default listening port
-# By default, CouchDB will be installed at C:\CouchDB.
-Write-Output "Changing default listening port to 25984 ..."
-$couchDBConfigFile = Join-Path (Join-Path "C:\CouchDB" "etc") "default.ini"
-((Get-Content -path $couchDBConfigFile -Raw) -replace "5984","25984") | Set-Content -Path $couchDBConfigFile
-
-# In addition to that, we must restart CouchDB in order for the changes to take effect
-Write-Output "Restarting CouchDB ..."
-Restart-Service -Name "Apache CouchDB"
+## Replace the default listening port
+## By default, CouchDB will be installed at C:\CouchDB.
+#Write-Output "Changing default listening port to 25984 ..."
+#$couchDBConfigFile = Join-Path (Join-Path "C:\CouchDB" "etc") "default.ini"
+#((Get-Content -path $couchDBConfigFile -Raw) -replace "5984","25984") | Set-Content -Path $couchDBConfigFile
+#
+## In addition to that, we must restart CouchDB in order for the changes to take effect
+#Write-Output "Restarting CouchDB ..."
+#Restart-Service -Name "Apache CouchDB"
 
 Write-Output "CouchDB is now installed and configured"
 exit 0
