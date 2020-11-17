@@ -15,13 +15,7 @@ jobs:
             #          node-mirror: "https://nodejs.org/download/release/"
 
       - uses: actions/checkout@v2
-      - name: Set up CouchDB
-        uses: "cobot/couchdb-action@master"
-        with:
-          couchdb version: '2.3.1'
-      - name: Do something
-        run: |
-          curl http://127.0.0.1:5984/
+      - run: ./provisioning/CouchDB.ps1
         #      - uses: actions/setup-python@v2
         #        with:
         #          python-version: '2.7.17'

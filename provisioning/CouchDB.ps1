@@ -75,6 +75,9 @@ try {
 # Check service status
 Get-Service -Name "Apache CouchDB"
 
+# Check listening Ports
+netstat -an | select-string -pattern "listening"
+
 # Set-up CouchDB to run as a single node server as described
 # here: https://docs.couchdb.org/en/stable/setup/single-node.html
 Write-Output "Configuring CouchDB ..."
