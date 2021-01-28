@@ -30,6 +30,13 @@ fluid.contextAware.makeChecks({
 var binPath = path.join(__dirname, "bin");
 process.env.path = binPath + ";" + process.env.path;
 
+// Use certificates from the Windows certificate stores [GPII-4186]
+var ca = require("win-ca/api");
+ca({
+    store: ["MY", "Root", "Trust", "CA"],
+    inject: "+"
+});
+
 require("./gpii/node_modules/WindowsUtilities/WindowsUtilities.js");
 require("./gpii/node_modules/processHandling/processHandling.js");
 require("./gpii/node_modules/displaySettingsHandler");
@@ -50,5 +57,6 @@ require("./gpii/node_modules/gpii-office");
 require("./gpii/node_modules/gpii-userInput");
 require("./gpii/node_modules/gpii-service-handler");
 require("./gpii/node_modules/gpii-iod");
+require("./gpii/node_modules/gpii-windowManagement");
 
 module.exports = fluid;
