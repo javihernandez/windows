@@ -34,6 +34,7 @@ Invoke-Command $csc "/target:exe /out:test-window.exe test-window.cs" $testProce
 # Build the Windows Service
 try
 {
+    # Build in its own drive to avoid a long pathname, and isolate from any node_modules in a parent.
     subst q: (Join-Path $rootDir "gpii-service")
     Invoke-Command "npm" "install" q:
 } finally {
