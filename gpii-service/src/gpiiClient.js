@@ -144,7 +144,7 @@ gpiiClient.requestHandlers.closing = function () {
  */
 gpiiClient.requestHandlers.getClientCredentials = function () {
     var secrets = service.getSecrets();
-    return null;//secrets && secrets.clientCredentials;
+    return secrets && secrets.clientCredentials;
 };
 
 /**
