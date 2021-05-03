@@ -23,7 +23,7 @@ using std::pair;
 
 #pragma comment (lib, "WindowsApp.lib")
 
-[System::STAThread]
+[System::MTAThread]
 int wmain(int argc, wchar_t* argv[]) {
     pair<int, wchar_t**> payload { argc, argv };
     DWORD threadID { 0 };
